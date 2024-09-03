@@ -278,16 +278,33 @@ void physics()
     if (g.xres < g.w * 2) {
         g.bounceCount = 0; // Reset the bounce count since the box will not bounce
     }
-}       
+}
 
-void update_box_color() {
+void render()
+{
+    lClear(GL_COLOR_BUFFER_BIT);
+    glPushMatrix();
+    glColor3ub(g.boxColor[0], g.boxColor[1], g.boxColor[2]);
+    glTranslatef(g.pos[0], g.pos[1], 0.0f);
+    glBegin(GL_QUADS);
+        glVertex2f(-g.w, -g.w);
+        glVertex2f(-g.w,  g.w);
+        glVertex2f( g.w,  g.w);
+        glVertex2f( g.w, -g.w);
+    glEnd();
+    glPopMatrix();
+}
+
+void update_box_color() 
+{
     int maxBounces = 100;
     float t = (float)g.bounceCount / maxBounces;
     t = t > 1.0f ? 1.0f : t;
 
     g.boxColor[0] = (unsigned int)(100 + 155 * t);  
-    g.boxColor[1] = 120;                            
-
+    g.boxColor[1] = (unsigned int)(120 + 135 * t);
+    g.boxColor[2] = (unsigned int)(220 - 220 * t);                           
+}
 
 
 
